@@ -1,0 +1,4 @@
+Notes sur les programmes et les erreurs :
+
+1. Le receveur attends un paquet, mais l'émetteur ne demande pas à l'utilisateur d'entrer un message...
+2. Quand on lance le receiveur avant le sender, erreur : l'adresse IP est "already in use".
