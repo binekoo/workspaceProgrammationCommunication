@@ -2,11 +2,13 @@ package fr.upec.episen;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Inet4Address;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.LocalTime;
 import java.util.Properties;
 import org.apache.logging.log4j.*;
-
-import com.google.common.net.InetAddresses;
 
 public class Main {
     protected static Logger mainLog = LogManager.getLogger(Main.class);
@@ -46,12 +48,31 @@ public class Main {
 
     protected Integer port;
     protected Integer packetSize;
-    protected InetAddresses address;
+    protected InetAddress address;
 
-    public Main(final String adrValue, final int portValue, final int size){
+    public Main(final String adrValue, final int portValue, final int size) throws UnknownHostException{
         this.port = portValue;
-        this.packetSize = packetSize;
-        this.address = adrValue;
+        this.packetSize = size;
+        this.address = InetAddress.getByName(adrValue);
     }
 
+    public void run(){
+        //Faire un aller retour -> faire un MEP : request / response
+        // 1. Faire la requête :
+        LocalTime lt = LocalTime.now();
+        String msg = "{\"time\" : " + lt.toString() + "}";
+        byte[] body = msg.getBytes();
+        DatagramPacket packet = new DatagramPacket(body, body.length, this.address, this.port);
+        DatagramSocket socket = null;
+        try{
+            socket = new DatagramSocket();
+            socket.send(packet);
+            // 2. TODO : attendre la future response
+        }  catch(IOException ioe){
+            mainLog.error(ioe.getMessage());
+        } finally {
+            socket.close();
+        }
+
+    }
 }
