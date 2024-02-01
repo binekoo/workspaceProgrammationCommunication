@@ -58,29 +58,31 @@ public class Main {
         this.packetSize = packetSize;
     }
 
-    public void run(){
+    public void run() throws ClassNotFoundException{
         byte[] body = new byte[this.packetSize];
         while(this.active){
             DatagramPacket packet = new DatagramPacket(body, body.length);
             try{
                 this.socket.receive(packet);
                 processRequest(packet.getData());
+                //TODO processResponse()
             } catch(IOException ioe){
-                ioe.getMessage();
+                mainLog.error(ioe.getMessage());
             }
         }
     }
 
     public void processRequest(final byte[] data){
         //Lire les donées pour les afficher dans le logger
+        mainLog.info("data received : " + new String(data));
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         try{
             ObjectInputStream ois = new ObjectInputStream(bais);
-            String body = ois.readUTF();
-            mainLog.info("data received : " + body);
+            String body = ois.readObject().toString();
+            mainLog.info("body received : " + body);
             //TODO : sauvegarde du body
-        } catch(IOException ioe){
-            ioe.getMessage();
+        } catch(Exception ioe){
+            mainLog.error(ioe.getMessage());
         }
     }
 }

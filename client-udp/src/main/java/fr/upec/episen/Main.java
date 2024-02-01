@@ -10,6 +10,8 @@ import java.time.LocalTime;
 import java.util.Properties;
 import org.apache.logging.log4j.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Main {
     protected static Logger mainLog = LogManager.getLogger(Main.class);
     protected static Properties props = new Properties();
@@ -19,7 +21,7 @@ public class Main {
             // 0. Chagement du fichier de properties
             InputStream iStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
             props.load(iStream);
-            final int SIZE = Integer.parseInt(props.getProperty("msg.max.size"));
+            final int SIZE = Integer.parseInt(props.getProperty("msg.size.max"));
 
         String adrValue = "";
         int portValue = 0;
@@ -59,14 +61,17 @@ public class Main {
     public void run(){
         //Faire un aller retour -> faire un MEP : request / response
         // 1. Faire la requête :
-        LocalTime lt = LocalTime.now();
-        String msg = "{\"time\" : " + lt.toString() + "}";
-        byte[] body = msg.getBytes();
-        DatagramPacket packet = new DatagramPacket(body, body.length, this.address, this.port);
+        Message msg = new Message(3, "Nous sommes en TD3");
+        ObjectMapper mapper = new ObjectMapper();
+        byte[] body = new byte[this.packetSize];
         DatagramSocket socket = null;
+        
         try{
+        body = mapper.writeValueAsBytes(msg);
+        DatagramPacket packet = new DatagramPacket(body, body.length, this.address, this.port);
             socket = new DatagramSocket();
             socket.send(packet);
+            mainLog.info("request : " + msg);
             // 2. TODO : attendre la future response
         }  catch(IOException ioe){
             mainLog.error(ioe.getMessage());
