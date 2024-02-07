@@ -6,7 +6,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.time.LocalTime;
 import java.util.Properties;
 import org.apache.logging.log4j.*;
 
@@ -65,13 +64,13 @@ public class Main {
         ObjectMapper mapper = new ObjectMapper();
         byte[] body = new byte[this.packetSize];
         DatagramSocket socket = null;
-        
+
         try{
         body = mapper.writeValueAsBytes(msg);
         DatagramPacket packet = new DatagramPacket(body, body.length, this.address, this.port);
             socket = new DatagramSocket();
             socket.send(packet);
-            mainLog.info("request : " + msg);
+            mainLog.info("request : " + msg.toString());
             // 2. TODO : attendre la future response
         }  catch(IOException ioe){
             mainLog.error(ioe.getMessage());
