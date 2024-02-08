@@ -24,20 +24,27 @@ public class Main {
 
         String adrValue = "";
         int portValue = 0;
+        int number = 0;
+        String message = "";
         // 1. Traiter les paramètres éventuels sur la ligne de commande
-        if(args.length == 2){ //machine du serveur et port
+            //tester 4 params car modif du plugin
+        if(args.length == 4){ //machine du serveur et port
             //s'il y en a, les utiliser
             adrValue = args[0];
             String portString = args[1];
             portValue = Integer.parseInt(portString);
-        } else {
-            //utiliser les propriétés par défaut du fichier properties
+            String numberString = args[2];
+            number = Integer.parseInt(numberString);
+            message = args[3];
+        } else { //Sinon utiliser les propriétés par défaut du fichier properties
             adrValue = props.getProperty("udp.adress");
             portValue = Integer.parseInt(props.getProperty("udp.port"));
-            }
+            number = Integer.parseInt(props.getProperty("msg.number"));
+            message = props.getProperty("msg.message");
+        }
 
             // 2. Créer un client
-            Main client = new Main(adrValue, portValue, SIZE);
+            Main client = new Main(adrValue, portValue, number, message, SIZE);
 
             // 3.
             client.run();
@@ -50,30 +57,32 @@ public class Main {
     protected Integer port;
     protected Integer packetSize;
     protected InetAddress address;
+    protected  Message message;
 
-    public Main(final String adrValue, final int portValue, final int size) throws UnknownHostException{
+
+    public Main(final String adrValue, final int portValue, final int number, final String info, final int size) throws UnknownHostException{
         this.port = portValue; //port coté serveur
         this.packetSize = size;
         this.address = InetAddress.getByName(adrValue); //adrersse serveur
+        this.message = new Message(number, info);
         //TODO : il mmanque les inforrmations pour répondre.
     }
 
     public void run(){
         //Faire un aller retour -> faire un MEP : request / response
         // 1. Faire la requête :
-        Message msg = new Message(3, "Nous sommes en TD3");
         ObjectMapper mapper = new ObjectMapper();
         byte[] body = new byte[this.packetSize];
         DatagramSocket socket = null;
 
         try{
-        body = mapper.writeValueAsBytes(msg); //transcris le message en binaire
+        body = mapper.writeValueAsBytes(this.message); //transcris le message en binaire
             //Dependance pour faire du json : jackson-databind qui permet de créer un objet mapper de type object mapper.
             //object mapper : permet d'encoder une classe qui a des get et des set en json automatiquement
         DatagramPacket packet = new DatagramPacket(body, body.length, this.address, this.port);
             socket = new DatagramSocket();
             socket.send(packet);
-            mainLog.info("request : " + msg.toString());
+            mainLog.info("request : " + this.message.toString());
             // 2. TODO : attendre la future response
         }  catch(IOException ioe){
             mainLog.error(ioe.getMessage());

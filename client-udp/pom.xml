@@ -55,18 +55,42 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.1</version>
                 <executions>
+
                     <execution>
+                        <id>client1</id>
                         <goals>
                             <goal>java</goal>
                         </goals>
+                        <configuration>
+                            <mainClass> ${main.class} </mainClass>
+                            <arguments>
+                                <argument>127.0.0.1</argument>
+                                <argument>2323</argument>
+                                <argument>3</argument>
+                                <argument>Nous sommes en TD3</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
+
+                    <execution>
+                        <id>client2</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass> ${main.class} </mainClass>
+                            <arguments>
+                                <argument>127.0.0.1</argument>
+                                <argument>2323</argument>
+                                <argument>5</argument>
+                                <argument>Nous sommes en TD5</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
                 </executions>
-                <configuration>
-                    <mainClass> ${main.class} </mainClass>
-                </configuration>
             </plugin>
         </plugins>
-
     </build>
 
 </project>
