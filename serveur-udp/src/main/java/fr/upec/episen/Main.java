@@ -1,5 +1,6 @@
 package fr.upec.episen;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.*;
 
 import java.io.ByteArrayInputStream;
@@ -72,19 +73,17 @@ public class Main {
         }
     }
 
+    //avant : data : tableau de bytes, mais on veut un objet message
     public void processRequest(final byte[] data){
         //Lire les donées pour les afficher dans le logger
-        mainLog.info("data received : " + new String(data)); //Affichage de bytes transformés en String (objet de classe Message)
-         //on a encodé coté client et mtn on veut décoder coté serveur.
-
-//        ByteArrayInputStream bais = new ByteArrayInputStream(data);
-//        try{
-//            ObjectInputStream ois = new ObjectInputStream(bais);
-//            String body = ois.readObject().toString();
-//            mainLog.info("body received : " + body);
-//            //TODO : sauvegarde du body
-//        } catch(Exception ioe){
-//            mainLog.error(ioe.getMessage());
-//        }
+//        mainLog.info("data received : " + new String(data)); //Affichage de bytes transformés en String (objet de classe Message)
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+            //Reconstruction du message à partir d'un flux JSON
+            Message receivedMsg = mapper.readValue(data, Message.class);
+            mainLog.info("msg received : " + receivedMsg);
+        } catch (IOException ioe){
+            mainLog.error((ioe.getMessage()));
+        }
     }
 }

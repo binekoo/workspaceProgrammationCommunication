@@ -2,8 +2,11 @@ package fr.upec.episen;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Message {
+    protected static Logger msgLog = LogManager.getLogger(Message.class);
     protected Integer number;
     protected String info;
 
@@ -34,7 +37,7 @@ public class Message {
        try{
         result = mapper.writeValueAsString(this);
        } catch(JsonProcessingException jpe){
-            ;
+            msgLog.error(jpe.getMessage());
        }
        return result;
     }
