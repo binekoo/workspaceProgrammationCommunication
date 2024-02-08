@@ -26,6 +26,6 @@ public enum Connexion {
         }
     }
 
-    //pas besoin de getInstance() -> faire ocnnexion.Instance().
+    //pas besoin de getInstance() -> faire connexion.Instance().
 
 }

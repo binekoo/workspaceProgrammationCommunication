@@ -21,6 +21,7 @@ public class RequestBehaviour implements Callable<Boolean> {
             rbLog.error(ioe.getMessage());
         }
     }
+
     @Override
     public Boolean call() throws Exception {
         processRequest();

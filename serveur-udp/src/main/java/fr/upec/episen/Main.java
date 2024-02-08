@@ -57,48 +57,30 @@ public class Main {
         this.active = true;
         this.socket = new DatagramSocket(receptionPort);
         this.packetSize = packetSize;
-        Executors.newFixedThreadPool(10);
+        //Executors.newFixedThreadPool(10);
+        this.threadPool = Executors.newFixedThreadPool(10);
     }
 
-//    public void run() throws ClassNotFoundException{
-//        byte[] body = new byte[this.packetSize];
-//        while(this.active){
-//            DatagramPacket packet = new DatagramPacket(body, body.length);
-//            try{
-//                this.socket.receive(packet);
-//                //Déléguer le travail utile pour chaque client  à un thread.
-//                //Créer une instance de RequestBehaviour avec le paquet recu (requestBehaviour(packet)
-//                //Boolean result = this.threadPool.submit(requestBehaviour)
-//                RequestBehaviour rb = new RequestBehaviour(packet);
-//                //on retourne un futur boolen : quand la tache sera terminée seulement, tant que ce n'est pas le cas, on a rien
-//                Future<Boolean> result = this.threadPool.submit(rb);
-//                //le bool permet de tester pour savoir si le result s'est bien passé :
-//                //while : juste pour attendre que le processus se termine
-//                //while(!result.isDone());
-//                //mainLog.info("result = " + result.get());
-//            } catch(Exception ioe){
-//                mainLog.error(ioe.getMessage());
-//            }
-//        }
-//    }
-
-    //Méthode de Nawres
-    public void run() throws ClassNotFoundException {
+    public void run() throws ClassNotFoundException{
         byte[] body = new byte[this.packetSize];
-        while (this.active) { // ne s'art plus car on a fait cette boucle
+        while(this.active){
             DatagramPacket packet = new DatagramPacket(body, body.length);
-            try {
+            try{
                 this.socket.receive(packet);
-                //Deleguer le travail util pour chaque client à un thread
+                //Déléguer le travail utile pour chaque client  à un thread.
+                //Créer une instance de RequestBehaviour avec le paquet recu (requestBehaviour(packet)
+                //Boolean result = this.threadPool.submit(requestBehaviour)
                 RequestBehaviour rb = new RequestBehaviour(packet);
-                Future<Boolean> result = this.threadPool.submit(rb); // future boolean car retroune un future boolean quand la tache sera terminée
-                //juste pour tester
-//                    while(!result.isDone());
-//                    mainLog.info("result= "+ result.get());
-
-            } catch (IOException ioe) {
+                //on retourne un futur boolen : quand la tache sera terminée seulement, tant que ce n'est pas le cas, on a rien
+                Future<Boolean> result = this.threadPool.submit(rb);
+                //le bool permet de tester pour savoir si le result s'est bien passé :
+                //while : juste pour attendre que le processus se termine
+                //while(!result.isDone());
+                //mainLog.info("result = " + result.get());
+            } catch(Exception ioe){
                 mainLog.error(ioe.getMessage());
             }
         }
     }
+
 }

@@ -25,7 +25,7 @@ public void run() throws ClassNotFoundException{
     --> sequentiel non concurrent donc ça va pas.
     Une seule requete apres l'autre : prend trop de temps
 
-    Plus faire de new threads : (oracle veut plus) trop inclusif et jne s'adapte pas bien aux plateformes
+    Plus faire de new threads : (oracle veut plus) trop inclusif et ne s'adapte pas bien aux plateformes
     Utiliser la classe ExecutorService en utilisant la classe Executors
     Qu'est ce qu'un Executor service ? Thread non inclusif, meilleur que la méthode thread de base.
     Executors : https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html
@@ -35,7 +35,7 @@ public void run() throws ClassNotFoundException{
     On veut un POOL d'éxécutants borné : pour pouvoir traiter des requetes concurrentielles.
 
     newFixedThreadPoolint (nThreads)
-    Pq on veut etre borné ? Nombre de threads tjr borné su rune machine. BEsoin de borne pour en pas etre dans un systeme non contraint pour eviter un overflow.
+    Pq on veut etre borné ? Nombre de threads tjr borné su rune machine. Besoin de borne pour en pas être dans un systeme non contraint pour eviter un overflow.
     --> possible de créer nThreads exécutants.
     on peut executer au plus nthreads executants mais ca ne veut pas dire qu'ils sont crées. Cest juste le nombre max de threads a executer
     Si nombre de thread > nThreads : ceux en plus attendent qu'un des threads soit fini.
