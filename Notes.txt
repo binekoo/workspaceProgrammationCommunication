@@ -3,4 +3,49 @@ Notes sur les programmes et les erreurs :
 1. Le receveur attends un paquet, mais l'émetteur ne demande pas à l'utilisateur d'entrer un message...
 2. Quand on lance le receiveur avant le sender, erreur : l'adresse IP est "already in use".
 
-Classe message : on  a deux classes defférentes dans client et serveu r: regarder constructeurs
+Classe message : on  a deux classes defférentes dans client et serveur: regarder constructeurs
+
+Serveur : pas beosin de se deconnecter de la BD apres chaque requete
+
+Dans la classe main server :
+public void run() throws ClassNotFoundException{
+        byte[] body = new byte[this.packetSize];
+        while(this.active){
+            DatagramPacket packet = new DatagramPacket(body, body.length);
+            try{
+                this.socket.receive(packet);
+                processRequest(packet.getData());
+                saveMessage()
+                processResponse()
+            } catch(IOException ioe){
+                mainLog.error(ioe.getMessage());
+            }
+        }
+    }
+    --> sequentiel non concurrent donc ça va pas.
+    Une seule requete apres l'autre : prend trop de temps
+
+    Plus faire de new threads : (oracle veut plus) trop inclusif et jne s'adapte pas bien aux plateformes
+    Utiliser la classe ExecutorService en utilisant la classe Executors
+    Qu'est ce qu'un Executor service ? Thread non inclusif, meilleur que la méthode thread de base.
+    Executors : https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html
+    Classe qui se termine par un "s" et donc qui contient des méthodes static
+    newSingleThreadExecutor() -> renvoie un ExecutorService qui est un cas particulier d'Executor.
+    --> créer un executant, revient au meme que rien faire car revient à etre séquentiel.
+    On veut un POOL d'éxécutants borné : pour pouvoir traiter des requetes concurrentielles.
+
+    newFixedThreadPoolint (nThreads)
+    Pq on veut etre borné ? Nombre de threads tjr borné su rune machine. BEsoin de borne pour en pas etre dans un systeme non contraint pour eviter un overflow.
+    --> possible de créer nThreads exécutants.
+    on peut executer au plus nthreads executants mais ca ne veut pas dire qu'ils sont crées. Cest juste le nombre max de threads a executer
+    Si nombre de thread > nThreads : ceux en plus attendent qu'un des threads soit fini.
+
+    --> Executors permet de mettre en place une statégie d'execution
+
+    Pour executer un thread : méthode submit(Callable<T> task).
+    Classe Callable à faire qui va contenir requestMessage(), save(), processResponse()
+
+
+
+    Créer une connexion :
+    enregistrer le driver
