@@ -19,7 +19,7 @@ public class Main {
         mainLog.info("serveur-udp started");
 
         try{
-            // 0. Chagement du fichier de properties
+            // 0. Chargement du fichier de properties
             InputStream iStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
             props.load(iStream);
             final int SIZE = Integer.valueOf(props.getProperty("msg.size.max", "500"));
@@ -74,15 +74,17 @@ public class Main {
 
     public void processRequest(final byte[] data){
         //Lire les donées pour les afficher dans le logger
-        mainLog.info("data received : " + new String(data));
-        ByteArrayInputStream bais = new ByteArrayInputStream(data);
-        try{
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            String body = ois.readObject().toString();
-            mainLog.info("body received : " + body);
-            //TODO : sauvegarde du body
-        } catch(Exception ioe){
-            mainLog.error(ioe.getMessage());
-        }
+        mainLog.info("data received : " + new String(data)); //Affichage de bytes transformés en String (objet de classe Message)
+         //on a encodé coté client et mtn on veut décoder coté serveur.
+
+//        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+//        try{
+//            ObjectInputStream ois = new ObjectInputStream(bais);
+//            String body = ois.readObject().toString();
+//            mainLog.info("body received : " + body);
+//            //TODO : sauvegarde du body
+//        } catch(Exception ioe){
+//            mainLog.error(ioe.getMessage());
+//        }
     }
 }

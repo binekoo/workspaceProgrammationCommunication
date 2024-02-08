@@ -52,9 +52,10 @@ public class Main {
     protected InetAddress address;
 
     public Main(final String adrValue, final int portValue, final int size) throws UnknownHostException{
-        this.port = portValue;
+        this.port = portValue; //port coté serveur
         this.packetSize = size;
-        this.address = InetAddress.getByName(adrValue);
+        this.address = InetAddress.getByName(adrValue); //adrersse serveur
+        //TODO : il mmanque les inforrmations pour répondre.
     }
 
     public void run(){
@@ -66,7 +67,9 @@ public class Main {
         DatagramSocket socket = null;
 
         try{
-        body = mapper.writeValueAsBytes(msg);
+        body = mapper.writeValueAsBytes(msg); //transcris le message en binaire
+            //Dependance pour faire du json : jackson-databind qui permet de créer un objet mapper de type object mapper.
+            //object mapper : permet d'encoder une classe qui a des get et des set en json automatiquement
         DatagramPacket packet = new DatagramPacket(body, body.length, this.address, this.port);
             socket = new DatagramSocket();
             socket.send(packet);
