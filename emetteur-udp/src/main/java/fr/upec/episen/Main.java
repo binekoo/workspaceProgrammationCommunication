@@ -23,7 +23,7 @@ public class Main {
             String achatContenu = "{}";
             byte[] buffer = achatContenu.getBytes();
             DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
-            Integer port = Integer.valueOf(props.getProperty("udp.port", "1024"));
+            Integer port = Integer.valueOf(props.getProperty("udp.port", "1023"));
             dp.setPort(port);
             InetAddress emetteur = InetAddress.getLocalHost();
             dp.setAddress(emetteur);
