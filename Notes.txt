@@ -94,3 +94,19 @@ Dans le serveur :
     4b. Créer une response. Utiliser "Return" en SQL pour récupérer l'id
     4c. Créer un DP pour la réponse.
     4d. Créer une DS pour la réponse.
+
+
+
+    UDP : bien pour les broadcast mais nul pour du point à point (pas d'ACK + protocole lourd).
+
+    Prochain projet : protocole TCP : changer le véhicule du message mais message reste formatté en JSon : chaine de caractere mise en Byte
+    Avec JSON question : as o besoin de clés etrangeres ? Si non : possible d'utiliser autre chose que Psql et si oui : psql est bien pour.
+
+
+    A retenir : schéma de communication : on a une info qui part et une qui revient qui n'est pas forcement le meme.
+    Meme classes de chaque cote pour la serialisation : pour eviter ca, generalement on utlise un schéma de données.
+    Objet hors progra mais qui aide dans la prog.
+    On aurait du utiliser un schéma JSon (pas dur mais relou à écrire).
+    Il existe des outils qui permettent de créer une classe java a partir d'un format de données JSon.
+    JSON plus tres utilisé pour ca car Google utilise autre chose : ProtoBuff
+    Permet de ne pas avoir a ecrire la classe messageet response car générés par un utilitaire utilisable via l'import d'un plugin.

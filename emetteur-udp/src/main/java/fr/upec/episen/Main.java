@@ -20,21 +20,30 @@ public class Main {
             
             // 1. Création d'un datagram packet
             //TODO : encoder en JSON une commande
-            String achatContenu = "{}";
+            String achatContenu = "{tu me recois}";
             byte[] buffer = achatContenu.getBytes();
-            DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
             Integer port = Integer.valueOf(props.getProperty("udp.port", "1024"));
-            dp.setPort(port);
-            InetAddress emetteur = InetAddress.getLocalHost();
-            dp.setAddress(emetteur);
+
+
+//            dp.setPort(port);
+            InetAddress emetteur = InetAddress.getByName("localhost");
+
+
+            DatagramPacket dp = new DatagramPacket(buffer, buffer.length, emetteur,port);
+            mainLog.info("ip : " + emetteur);
+            mainLog.info("port : " + port);
+            mainLog.info("msg");
+//            dp.setAddress(emetteur);
 
             // 2. Création d'un datagramSocket
-            try(DatagramSocket ds = new DatagramSocket(port, emetteur)){
+            try{
+                DatagramSocket ds = new DatagramSocket(port, emetteur);
                 // 3. Emettre et attendre
                 ds.send(dp);
+                mainLog.info("Un datagram paquet est émis");
+            }catch(IOException e){
+                mainLog.error(e.getMessage());
             }
-
-            mainLog.info("Un datagram paquet est émis");
 
         } catch(IOException ioe) {
             mainLog.error(ioe.getMessage());
