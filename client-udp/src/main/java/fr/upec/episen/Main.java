@@ -90,6 +90,8 @@ public class Main {
             byte[] bodyResponse = new byte[this.packetSize];
             DatagramPacket responsePacket = new DatagramPacket(bodyResponse, this.packetSize);
             responseSocket.receive(responsePacket);
+            Response response =mapper.readValue(responsePacket.getData(), Response.class);
+            mainLog.info(response);
             mainLog.info(responsePacket.getData());
             responseSocket.close();
             mainLog.info("client-udp stopped");

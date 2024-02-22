@@ -51,14 +51,14 @@ public class RequestBehaviour implements Callable<Boolean> {
         Connection connection = Connexion.instance.getConnection();
         String insertSQL = Main.props.getProperty("messages.insert");
         try{
-            PreparedStatement pstmt = connection.prepareStatement(insertSQL, ResultSet.TYPE_SCROLL_SENSITIVE);
+            PreparedStatement pstmt = connection.prepareStatement(insertSQL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             //Initialisation de la requête (remplissage de la requete preparée des props) :
             pstmt.setInt(1, this.message.getNumber());
             pstmt.setString(2, this.message.getInfo());
             //Execution de la requete :
             ResultSet rs = pstmt.executeQuery();
             //next renvoie un boolean donc le log s'affiche si le resultset est non vide.
-            if(rs != null && rs.first()) { this.messageId = rs.getInt(messageId);}
+            if(rs != null && rs.first()) { this.messageId = rs.getInt("id");}
         } catch(SQLException sqle){
             rbLog.error(sqle.getMessage());
             return false;
@@ -73,11 +73,16 @@ public class RequestBehaviour implements Callable<Boolean> {
         //Besoin de transformer la réponse en binaire
         try{
             byte[] body = mapper.writeValueAsBytes(response);
+            rbLog.info("body = " + response.toString());
             // 2.Créer un DP
-            DatagramPacket packet = new DatagramPacket(body, body.length);
+
+            //Error : Adress already in use : ajouter l'adresse du destinataire du packet et le port car emission
+            DatagramPacket packet = new DatagramPacket(body, body.length, InetAddress.getByName(message.getFromIP()), message.getFromPort());
             // 3. Emettre sur un DS
-            DatagramSocket socket = new DatagramSocket(message.getFromPort(), InetAddress.getByAddress(message.getFromIP().getBytes()));
+            rbLog.info("adresse : " + message.getFromIP());
+            DatagramSocket socket = new DatagramSocket();
             socket.send(packet);
+            //TODO : socket a fermer
             return Boolean.TRUE;
         }catch(Exception e){
             rbLog.error(e.getMessage());

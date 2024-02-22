@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Response{
+public class Response {
     protected static Logger respLog = LogManager.getLogger(Response.class);
     protected Integer id;
     protected Integer number;
