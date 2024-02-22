@@ -45,7 +45,43 @@ public void run() throws ClassNotFoundException{
     Pour executer un thread : méthode submit(Callable<T> task).
     Classe Callable à faire qui va contenir requestMessage(), save(), processResponse()
 
-
-
     Créer une connexion :
     enregistrer le driver
+
+
+    22/02 :
+    Messages formatés sur un protocole UDP + paquet JSon
+    Manque : sauvegarde et réponse.
+
+    Pour l'instant:
+     client : msg.number = 0
+              msg.info = default
+
+    Pas d'enregistrement en BDD.
+    En base : table avec des attributs du tyoe : id, number, info
+    Dans pom.xml : commandes d'execution.
+
+    Classe RequestBehaviour implemente callable() : cote serveur : autant de threads que de clients.
+
+    Pour faire une connexion : faire un statement ou un preparedStatemennt pour faire un insert :
+    on a "id" typé SERIAL donc on le calcule pas.
+    On fait : INSERT INTO messages (number, info) values (?,?);
+    --> dans le fichier de Properties car texte rien à faire dans les fichiers java
+
+   Sur pg Admin :
+   truncate table + table [truncate table messages]
+   --> permet de vider la table en gardant la structure.
+
+    Pour faire le retour (ACK) du Serveur vers le client.
+    Besoin de faire un DP et serialiser le message coté client
+
+    1. Créer une classe Reponse qui contient les données du dernier INSERT.
+    Problème : comment savoir quel est le dernier INSERT : on a plusieurs clients donc si un autre client envoie un message entre deux on enverra l'ACK au mauvais client.
+    --> il faut récupérer l'ID associé et non le dernier ID.
+    2.Créer la méthode ProcessResponse()
+    2b. Créer un DatagraPacket dans ProcessResponse().
+    Problème : DP se créer avec un contenu binaire, une adresse IP et un port. Mais dans les props du client : adresse IP et port de la machine actuelle.
+    En tant que Serveur : bete de garder en props toutes les adresses de tous les clients. Voir dans le doc de DP si l'emetteur du paquet peut transmettre
+    son adresse pour pouvoir lui répondre.
+    --> Comment ajouter l'adresse et le port du client ?
+    [Conséquence : ] 3. Modificaton du client (Commencer par ça car tant que la classe n'est pas modifiée on peut rien faire).

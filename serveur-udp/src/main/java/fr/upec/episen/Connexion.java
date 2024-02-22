@@ -26,6 +26,10 @@ public enum Connexion {
         }
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     //pas besoin de getInstance() -> faire connexion.Instance().
 
 }
