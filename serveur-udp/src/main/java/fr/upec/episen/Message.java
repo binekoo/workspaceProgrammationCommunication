@@ -9,10 +9,14 @@ public class Message {
     protected static Logger msgLog = LogManager.getLogger(Message.class);
     protected Integer number;
     protected String info;
+    private String fromIP;
+    private int fromPort;
 
     public Message(){
         this.number = 0;
         this.info = "unknown";
+        fromIP = "Unknown";
+        fromPort = 0;
     }
 
     public Integer getNumber() {
@@ -43,5 +47,21 @@ public class Message {
             msgLog.error(jpe.getMessage());
         }
         return result;
+    }
+
+    public void setFromPort(int fromPort) {
+        this.fromPort = fromPort;
+    }
+
+    public int getFromPort() {
+        return fromPort;
+    }
+
+    public void setFromIP(String fromIP) {
+        this.fromIP = fromIP;
+    }
+
+    public String getFromIP() {
+        return fromIP;
     }
 }

@@ -9,6 +9,8 @@ public class Message {
     protected static Logger msgLog = LogManager.getLogger(Message.class);
     protected Integer number;
     protected String info;
+    private String fromIP;
+    private int fromPort;
 
     public Message(Integer number, String info){
         this.number = number;
@@ -29,6 +31,22 @@ public class Message {
 
     public void setInfo(String i){
         this.info = i;
+    }
+
+    public String getFromIP() {
+        return fromIP;
+    }
+
+    public void setFromIP(String fromIP) {
+        this.fromIP = fromIP;
+    }
+
+    public int getFromPort() {
+        return fromPort;
+    }
+
+    public void setFromPort(int fromPort) {
+        this.fromPort = fromPort;
     }
 
     public String toString(){

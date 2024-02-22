@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 public class RequestBehaviour implements Callable<Boolean> {
     protected static Logger rbLog = LogManager.getLogger(RequestBehaviour.class);
     protected Message message;
+    protected Integer messageId;
 
     public RequestBehaviour(DatagramPacket packet){
         byte[] body = packet.getData();
@@ -24,6 +25,7 @@ public class RequestBehaviour implements Callable<Boolean> {
         } catch(IOException ioe){
             rbLog.error(ioe.getMessage());
         }
+        this.messageId = 0;
     }
 
     @Override
@@ -32,6 +34,7 @@ public class RequestBehaviour implements Callable<Boolean> {
         saveMessage();
         processResponse();
         return true;
+        //Todo: modifier le return
     }
 
     public void processRequest(){
@@ -50,13 +53,21 @@ public class RequestBehaviour implements Callable<Boolean> {
             pstmt.setInt(1, this.message.getNumber());
             pstmt.setString(2, this.message.getInfo());
             //Execution de la requete :
-            int nb = pstmt.executeUpdate();
+            ResultSet rs = pstmt.executeQuery();
             //next renvoie un boolean donc le log s'affiche si le resultset est non vide.
-            if(nb != 0) { rbLog.info("nb insert = " + nb);}
+            if(rs != null && rs.first()) { rbLog.info("nb insert = " + rs);}
         } catch(SQLException sqle){
             rbLog.error(sqle.getMessage());
             return false;
         }
         return true;
+    }
+
+    public Boolean processResponse(){
+        // 1.Créer une réponse
+
+        // 2.Créer un DP
+
+        // 3. Emettre sur un DS
     }
 }

@@ -65,7 +65,9 @@ public class Main {
         this.packetSize = size;
         this.address = InetAddress.getByName(adrValue); //adrersse serveur
         this.message = new Message(number, info);
-        //TODO : il mmanque les inforrmations pour répondre.
+        //Informations pour répondre.
+        this.message.setFromIP(InetAddress.getLocalHost().getHostAddress());
+        this.message.setFromPort(3232);
     }
 
     public void run(){
@@ -84,6 +86,13 @@ public class Main {
             socket.send(packet);
             mainLog.info("request : " + this.message.toString());
             // 2. TODO : attendre la future response
+            DatagramSocket responseSocket = new DatagramSocket(3232, InetAddress.getLocalHost());
+            byte[] bodyResponse = new byte[this.packetSize];
+            DatagramPacket responsePacket = new DatagramPacket(bodyResponse, this.packetSize);
+            responseSocket.receive(responsePacket);
+            mainLog.info(responsePacket.getData());
+            responseSocket.close();
+            mainLog.info("client-udp stopped");
         }  catch(IOException ioe){
             mainLog.error(ioe.getMessage());
         } finally {

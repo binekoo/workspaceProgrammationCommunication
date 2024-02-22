@@ -85,3 +85,12 @@ public void run() throws ClassNotFoundException{
     son adresse pour pouvoir lui répondre.
     --> Comment ajouter l'adresse et le port du client ?
     [Conséquence : ] 3. Modificaton du client (Commencer par ça car tant que la classe n'est pas modifiée on peut rien faire).
+    Solution : dans le message, envoyer l'adresse IP et le numero de port et les stocker en base. Quand le message arrive dans Callable(), on  a déjà les bonnes info -> pas besoin de modifier le serveur.
+    Ajout des attributs fromIp et fromPort dans la classe Message côté Client. (OK)
+    Modifier la classe Main pour ajouter les infos (OK).
+
+Dans le serveur :
+    4a. Modifier la classe Message.
+    4b. Créer une response. Utiliser "Return" en SQL pour récupérer l'id
+    4c. Créer un DP pour la réponse.
+    4d. Créer une DS pour la réponse.
