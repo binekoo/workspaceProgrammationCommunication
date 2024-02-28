@@ -28,7 +28,6 @@ public class Main {
 //            dp.setPort(port);
             InetAddress emetteur = InetAddress.getByName("localhost");
 
-
             DatagramPacket dp = new DatagramPacket(buffer, buffer.length, emetteur,port);
             mainLog.info("ip : " + emetteur);
             mainLog.info("port : " + port);

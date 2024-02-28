@@ -31,7 +31,6 @@ public class receveur2 {
 
        receveur2 receveur = new receveur2();
     }
-    
 
 }
 

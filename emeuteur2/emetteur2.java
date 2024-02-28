@@ -17,6 +17,7 @@ public class emetteur2 {
         DatagramSocket socket = new DatagramSocket();
         socket.send(packet);
         System.out.println("messaage envoyé");
+        //System.out.println("Adresse IP : " + InetAddress.getByName(ip));
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -28,6 +29,4 @@ public class emetteur2 {
         emetteur2 emetteur = new emetteur2();
         emetteur.emetteur2m();
     }
-
-    
 }
