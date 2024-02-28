@@ -25,18 +25,15 @@ public class Main {
             Integer port = Integer.valueOf(props.getProperty("udp.port", "1024"));
 
 
-//            dp.setPort(port);
             InetAddress emetteur = InetAddress.getByName("localhost");
 
             DatagramPacket dp = new DatagramPacket(buffer, buffer.length, emetteur,port);
             mainLog.info("ip : " + emetteur);
             mainLog.info("port : " + port);
             mainLog.info("msg");
-//            dp.setAddress(emetteur);
 
             // 2. Création d'un datagramSocket
             try{
-                //DatagramSocket ds = new DatagramSocket(port, emetteur);
                 DatagramSocket ds = new DatagramSocket();
                 // 3. Emettre et attendre
                 ds.send(dp);

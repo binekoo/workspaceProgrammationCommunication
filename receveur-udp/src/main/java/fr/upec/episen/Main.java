@@ -18,7 +18,6 @@ public class Main {
             // 0. Chagement du fichier de properties
             InputStream iStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
             props.load(iStream);
-            //final int SIZE = Integer.valueOf(props.getProperty("msg.size.max", "500"));
 
             // 1. Crétation du datagram paquet vide
 
