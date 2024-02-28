@@ -22,7 +22,7 @@ public class Main {
 
             // 1. Crétation du datagram paquet vide
 
-            byte[] buffer = new byte[5];
+            byte[] buffer = new byte[25];
             DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
 
             Integer port = Integer.valueOf(props.getProperty("udp.port", "1024"));

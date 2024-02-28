@@ -36,7 +36,8 @@ public class Main {
 
             // 2. Création d'un datagramSocket
             try{
-                DatagramSocket ds = new DatagramSocket(port, emetteur);
+                //DatagramSocket ds = new DatagramSocket(port, emetteur);
+                DatagramSocket ds = new DatagramSocket();
                 // 3. Emettre et attendre
                 ds.send(dp);
                 mainLog.info("Un datagram paquet est émis");
