@@ -25,3 +25,5 @@ Pb : plein de cartes resau (physique set logiques) et des qu'on fait des install
 
 Voir "reseau sans fils wifi" -> regarder dans params sous mac.
 (Si fonctionne plus plus tard : chaner @IP)
+
+Reussite de connection = tube OK.

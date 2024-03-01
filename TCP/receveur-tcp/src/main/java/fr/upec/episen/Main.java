@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
+import java.io.OutputStream;
 
 
 public class Main {
@@ -25,6 +26,11 @@ public class Main {
                 //La socket se créera quand quelque chose sera recç, pas avant.
                 Socket socket = ss.accept();
                 mainLog.warn("one more connection");
+                InputStream input = socket.getInpuStream();
+                byte[] msg = new byte[15];
+                int nb = input.read(msg);
+                mainLog.warn("nb bytes = " +  nb);
+                mainLog.warn(new String(msg));
             }
         } catch(IOException ioe){
             mainLog.error(ioe.getMessage());

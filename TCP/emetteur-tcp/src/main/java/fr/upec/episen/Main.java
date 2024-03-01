@@ -20,12 +20,16 @@ public class Main {
         try{
             props.load(is);
             //2. Créer un serveur TCP
-            final int PORT = Integer.parseInt(props.getProperty("tcp.prot"));
+            final int PORT = Integer.parseInt(props.getProperty("tcp.port"));
             final String ADDR = props.getProperty("tcp.address");
             InetAddress  address = InetAddress.getByName(ADDR);
             //On se connecte au receveur ici :
             Socket socket = new Socket(address, PORT);
             mainLog.warn("emetteur-tcp connected");
+            OutputStream os = socket.getOutputStream();
+            String msg = "C'est la pause";
+            os.write(msg.getBytes());
+            Thread.sleep(100000);
         } catch(IOException ioe){
             mainLog.error(ioe.getMessage());
         } finally {
