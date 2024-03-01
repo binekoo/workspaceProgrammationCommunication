@@ -28,9 +28,10 @@ public class Main {
             InetAddress emetteur = InetAddress.getByName("localhost");
 
             DatagramPacket dp = new DatagramPacket(buffer, buffer.length, emetteur,port);
-            mainLog.info("ip : " + emetteur);
-            mainLog.info("port : " + port);
-            mainLog.info("msg");
+            //juste pour info pour tester le code
+//            mainLog.info("ip : " + emetteur);
+//            mainLog.info("port : " + port);
+//            mainLog.info("msg");
 
             // 2. Création d'un datagramSocket
             try{
