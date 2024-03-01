@@ -23,10 +23,10 @@ public class Main {
             //2. Créer un serveur TCP
             final int PORT = Integer.parseInt(props.getProperty("tcp.port"));
             try (ServerSocket ss = new ServerSocket(PORT)){
-                //La socket se créera quand quelque chose sera recç, pas avant.
+                //La socket se créera quand quelque chose sera reçu, pas avant.
                 Socket socket = ss.accept();
                 mainLog.warn("one more connection");
-                InputStream input = socket.getInpuStream();
+                InputStream input = socket.getInputStream();
                 byte[] msg = new byte[15];
                 int nb = input.read(msg);
                 mainLog.warn("nb bytes = " +  nb);

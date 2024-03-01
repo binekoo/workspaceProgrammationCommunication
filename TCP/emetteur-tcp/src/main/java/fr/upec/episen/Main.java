@@ -2,7 +2,7 @@ package fr.upec.episen;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Inet4Address;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Properties;
@@ -30,8 +30,8 @@ public class Main {
             String msg = "C'est la pause";
             os.write(msg.getBytes());
             Thread.sleep(100000);
-        } catch(IOException ioe){
-            mainLog.error(ioe.getMessage());
+        } catch(Exception e){
+            mainLog.error(e.getMessage());
         } finally {
             mainLog.warn("emetteur tcp stopped");
         }
