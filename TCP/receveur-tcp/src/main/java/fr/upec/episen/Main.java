@@ -27,7 +27,8 @@ public class Main {
                 Socket socket = ss.accept();
                 mainLog.warn("one more connection");
                 InputStream input = socket.getInputStream();
-                byte[] msg = new byte[15];
+                final int PACKET_SIZE = Integer.parseInt(props.getProperty("packet.size"));
+                byte[] msg = new byte[PACKET_SIZE];
                 int nb = input.read(msg);
                 mainLog.warn("nb bytes = " +  nb);
                 mainLog.warn(new String(msg));

@@ -10,6 +10,11 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.upec.episen.generated.Message;
+
+
 public class Main {
     protected static Logger mainLog = LogManager.getLogger(Main.class);
     protected static Properties props = new Properties();
@@ -27,13 +32,18 @@ public class Main {
             Socket socket = new Socket(address, PORT);
             mainLog.warn("emetteur-tcp connected");
             OutputStream os = socket.getOutputStream();
-            String msg = "C'est la pause";
-            os.write(msg.getBytes());
+            //TODO : remplacer par un objet d'une classe générée (pas réussi du coup classe Message en dur)
+            Message msg = new Message();
+            msg.setInfo("Message du vendredi");
+            msg.setCreation("03-01-2024T11:03:03");
+            msg.setOrder(1);
+            ObjectMapper mapper = new ObjectMapper();
+            os.write(mapper.writeValueAsBytes(msg));
             Thread.sleep(100000);
         } catch(Exception e){
             mainLog.error(e.getMessage());
         } finally {
-            mainLog.warn("emetteur tcp stopped");
+            mainLog.warn("emetteur-tcp stopped");
         }
     }
 }

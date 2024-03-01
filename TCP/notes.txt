@@ -27,3 +27,7 @@ Voir "reseau sans fils wifi" -> regarder dans params sous mac.
 (Si fonctionne plus plus tard : chaner @IP)
 
 Reussite de connection = tube OK.
+
+Valider son JSON avant de l'intégrer au code : https://jsonlint.com
+
+on a pas resussi a générer la classe donc création d'une classe Message dans emetteur mais réessayer avec le plugin ajouté dans le pom.
