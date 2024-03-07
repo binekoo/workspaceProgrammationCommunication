@@ -1,3 +1,7 @@
 Rappel : la derniere fois on a pas reussi a générer une class java a partir du fichier JSON notamment à cause de la balise <sourceType>
 On ne met pas la classe dans le meme paquet que le code généré car Maven supprime ce qu'il génère.
 ajout de <removeOldOutput>false</removeOldOutput>
+
+Pour écrire dans les logs, bine faire mainLog.error et non .info ou warn car on a redirigé la sortie erreur seulement sur les fichiers de log.
+
+Dans le main : ajouter des variables d'environneùment pour qu ela classe receeveur puisse lire ces variables sans avoir a lire le fichier application.properties du main
