@@ -1,0 +1,3 @@
+Rappel : la derniere fois on a pas reussi a générer une class java a partir du fichier JSON notamment à cause de la balise <sourceType>
+On ne met pas la classe dans le meme paquet que le code généré car Maven supprime ce qu'il génère.
+ajout de <removeOldOutput>false</removeOldOutput>

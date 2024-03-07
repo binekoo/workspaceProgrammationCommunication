@@ -8,7 +8,14 @@
         <option value="$PROJECT_DIR$/serveur-udp/pom.xml" />
         <option value="$PROJECT_DIR$/emetteur-udp/pom.xml" />
         <option value="$PROJECT_DIR$/receveur-udp/pom.xml" />
+        <option value="$PROJECT_DIR$/fr.upec.episen/pom.xml" />
+        <option value="$PROJECT_DIR$/emetteur-ssm/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/fr.upec.episen/pom.xml" />
+      </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
