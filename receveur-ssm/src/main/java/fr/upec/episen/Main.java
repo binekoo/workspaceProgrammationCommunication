@@ -37,11 +37,13 @@ public class Main {
                 environment.put("UDP_ADRESS", props.getProperty("udp.address"));
                 environment.put("UDP_PORT", props.getProperty("udp.port"));
                 File log = new File("Log" + index);
+                File out = new File("Out" + index);
                 builder.redirectErrorStream(true);
                 builder.redirectError(log);
+                builder.redirectOutput(out);
                 Process process = builder.start();
                 mainLog.warn("process num = " + process.pid());
-              //  Thread.sleep(Duration.ofMinutes(4).toMillis());
+                Thread.sleep(Duration.ofMinutes(1).toMillis());
             }
         } catch(Exception e){
             mainLog.error(e.getMessage());

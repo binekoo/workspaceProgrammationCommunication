@@ -1,0 +1,2 @@
+Error: Could not find or load main class .Users.nawel.Documents.GitHub.workspaceProgrammationCommunication.receveur-ssm.src.main.java.fr.upec.episen.Receveur
+Caused by: java.lang.ClassNotFoundException: /Users/nawel/Documents/GitHub/workspaceProgrammationCommunication/receveur-ssm/src/main/java/fr/upec/episen/Receveur
